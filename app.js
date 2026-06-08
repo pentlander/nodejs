@@ -24,9 +24,10 @@ app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
-// Initialize DB (non-fatal) then start server
-initDb().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
-  });
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});
+
+initDb().catch((err) => {
+  console.error('Database initialization failed:', err);
 });

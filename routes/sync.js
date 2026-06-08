@@ -17,6 +17,17 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/syncfs', (req, res) => {
+  execFile('/bin/sync', ['-f', os.tmpdir()], (err) => {
+    if (err) {
+      console.error('GET /api/sync/syncfs error:', err);
+      return res.status(500).json({ error: 'syncfs failed' });
+    }
+
+    res.json({ ok: true, syscall: 'syncfs' });
+  });
+});
+
 router.get('/fsync', (req, res) => {
   const filePath = path.join(os.tmpdir(), `fsync-${process.pid}-${Date.now()}`);
   const fd = fs.openSync(filePath, 'w');
