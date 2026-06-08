@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const indexRouter = require('./routes/index');
 const itemsRouter = require('./routes/items');
+const syncRouter = require('./routes/sync');
 const { initDb } = require('./db');
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use the router for handling routes
 app.use('/', indexRouter);
 app.use('/api/items', itemsRouter);
+app.use('/api/sync', syncRouter);
 
 // Catch-all route for handling 404 errors
 app.use((req, res, next) => {
